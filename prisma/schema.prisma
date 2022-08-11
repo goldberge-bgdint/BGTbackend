@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Blogposts {
+    @@map(name:"blogposts")
+  ID Int @id @unique(map: "ID_UNIQUE") @default(autoincrement())
+  postheading String @db.VarChar(2000)
+  postmessage String @db.VarChar(2000)
+}
+
+model Jobs {
+  @@map(name:"jobs")
+  ID Int @id @default(autoincrement()) @unique
+  title String @db.VarChar(400)
+  type String @db.VarChar(50)
+  status String @db.VarChar(50)
+  nature String @db.VarChar(50)
+  department String @db.VarChar(200)
+  address String @db.VarChar(300)
+  imageid Int @db.Int
+  vacancies Int @db.Int
+  description String @db.VarChar(6000)
+  create_at DateTime @default(now())
+  update_at DateTime @default(now())
+  post_at DateTime @default(now())
+}
+
+model Contact {
+  @@map(name:"contact")
+  ID Int @id @default(autoincrement()) @unique
+  email String @db.VarChar(80)
+  name String @db.VarChar(50)
+  message String @db.VarChar(1000)
+  status String @db.VarChar(200) @default("pending")
+  create_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Media_file {
+   @@map(name:"media_file")
+   ID Int @id @default(autoincrement()) @unique
+   name String @db.VarChar(80)
+   path String @db.VarChar(300)
+   type String @db.VarChar(80)
+   active String @db.VarChar(80)
+   created_at DateTime @default(now())
+   updated_at DateTime @default(now())
+}
+
+
+model Job_applicant{
+  @@map(name:"job_applicant")
+  ID Int @id @default(autoincrement()) @unique
+  job_id Int @db.Int
+  name String @db.VarChar(300)
+  email String @db.VarChar(400)
+  number String @db.VarChar(200)
+  coverletter String @db.VarChar(4000)
+  mediafiles_resume_id Int @db.Int
+  status String @db.VarChar(200) @default("pending")
+  create_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
